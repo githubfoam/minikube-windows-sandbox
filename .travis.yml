@@ -11,6 +11,22 @@ matrix:
   fast_finish: true
   include:
 
+    - name: "deploy minikube helm latest w chocolatey Python 3.8 on Windows"
+      os: windows
+      language: shell
+      env:
+        - PATH=/c/Python38:/c/Python38/Scripts:$PATH
+      before_install:
+        - choco install python
+        - python --version
+      script:
+        - choco install minikube
+        - choco install kubernetes-helm
+        - minikube version
+        - helm version     
+      after_success:
+        - deactivate
+
     - name: "deploy minikube latest w chocolatey Python 3.8 on Windows"
       os: windows
       language: shell
