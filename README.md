@@ -6,4 +6,6 @@ Travis (.com) dev branch:
 ~~~~
 https://helm.sh/docs/intro/install/
 https://minikube.sigs.k8s.io/docs/start/
+https://scoop.sh/
+https://chocolatey.org/
 ~~~~

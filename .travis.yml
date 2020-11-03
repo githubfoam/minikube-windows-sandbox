@@ -40,19 +40,3 @@ matrix:
         - minikube version
       after_success:
         - deactivate
-
-    - name: "deploy minikube latest wo chocolatey Python 3.8 on Windows"
-      os: windows
-      language: shell
-      env:
-        - PATH=/c/Python38:/c/Python38/Scripts:$PATH
-      before_install:
-        - choco install python
-        - python --version
-      script:
-        - $output = "minikube-installer.exe"
-        - $url = "https://storage.googleapis.com/minikube/releases/latest/minikube-installer.exe"
-        - Invoke-WebRequest -Uri $url -OutFile $output
-        - minikube version
-      after_success:
-        - deactivate
