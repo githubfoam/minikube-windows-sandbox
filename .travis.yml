@@ -11,6 +11,7 @@ matrix:
   fast_finish: true
   include:
 
+# TESTED OK
     - name: "deploy minikube helm kubernetes-cli latest w chocolatey Python 3.8 on Windows"
       os: windows
       language: shell
@@ -29,6 +30,7 @@ matrix:
       after_success:
         - deactivate
 
+# TESTED OK
     - name: "deploy minikube helm latest w chocolatey Python 3.8 on Windows"
       os: windows
       language: shell
@@ -47,7 +49,7 @@ matrix:
 
 # https://www.powershellgallery.com/
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/
-    - name: "deploy kubectl binary with curl Python 3.8 on Windows"
+    - name: "deploy with Powershell from PSGallery Python 3.8 on Windows"
       os: windows
       language: shell
       env:
@@ -58,6 +60,9 @@ matrix:
       script:
         - choco install curl 
         # Run the installation commands (making sure to specify a DownloadLocation)
+        - Install-Module -Name install-kubectl -Scope CurrentUser -Force
+        - Get-Command install-kubectl # verify
+        - gcm install-kubectl # or shorter version verify
         - Install-Script -Name 'install-kubectl' -Scope CurrentUser -Force
         # If you do not specify a DownloadLocation, kubectl will be installed in the user's temp Directory.
         # The installer creates $HOME/.kube and instructs it to create a config file
@@ -76,12 +81,12 @@ matrix:
         - choco install python
         - python --version
       script:
-        - choco install curl 
+        # - choco install curl #curl - curl v7.70.0 already installed
         # find out the latest stable version (for example, for scripting),
         # https://storage.googleapis.com/kubernetes-release/release/stable.txt
         - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.0/bin/windows/amd64/kubectl.exe
         # Add the binary in to your PATH
-        - kubectl version --client
+        # - kubectl version --client
       after_success:
         - deactivate
 
@@ -97,6 +102,10 @@ matrix:
         - python --version
       script:
       # change the execution policy (i.e. enable Powershell) with
+        - set #see all currently defined environment variables 
+        - set USERPROFILE #query the value of %USERPROFILE%
+        - net user # displays all user accounts on a local machine
+        # - echo Set-ExecutionPolicy RemoteSigned -scope CurrentUser #when debugging a command
         - Set-ExecutionPolicy RemoteSigned -scope CurrentUser 
       # Make sure PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later) are installed.
         - Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
@@ -105,14 +114,14 @@ matrix:
         - kubectl version --client #Test to ensure the version you installed is up-to-date
         # If you're using cmd.exe, run: cd %USERPROFILE%
         - echo %USERPROFILE%
-        - dir
-        - cd ~
-        - mkdir .kube #Create the .kube directory
-        - cd .kubecd .kube #Change to the .kube directory
+        # - dir
+        # - cd ~
+        # - mkdir .kube #Create the .kube directory
+        # - cd .kube #Change to the .kube directory
         # -Configure kubectl to use a remote Kubernetes cluster
         # Edit the config file with a text editor of your choice, such as Notepad
-        - New-Item config -type file
-        - dir        
+        # - New-Item config -type file
+        # - dir        
       after_success:
         - deactivate
 
@@ -133,14 +142,15 @@ matrix:
         - dir
         - cd ~
         - mkdir .kube #Create the .kube directory
-        - cd .kubecd .kube #Change to the .kube directory
+        - cd .kube #Change to the .kube directory
         # -Configure kubectl to use a remote Kubernetes cluster
         # Edit the config file with a text editor of your choice, such as Notepad
-        - New-Item config -type file
+        - ps New-Item config -type file #new-item is a powershell command 
         - dir
       after_success:
         - deactivate
 
+# TESTED OK
     - name: "deploy minikube latest w chocolatey Python 3.8 on Windows"
       os: windows
       language: shell
