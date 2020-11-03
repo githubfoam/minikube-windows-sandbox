@@ -1,7 +1,7 @@
 # minikube-windows-sandbox
 
 Travis (.com) dev branch:
-[![Build Status](https://travis-ci.com/githubfoam/minikube-windows-sandbox.svg?branch=master)](https://travis-ci.com/githubfoam/minikube-windows-sandbox)  
+[![Build Status](https://travis-ci.com/githubfoam/minikube-windows-sandbox.svg?branch=main)](https://travis-ci.com/githubfoam/minikube-windows-sandbox)  
 
 ~~~~
 https://helm.sh/docs/intro/install/
