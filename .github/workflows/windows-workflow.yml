@@ -3,7 +3,7 @@ name: "windows minikube CI workflow"
 
 on:
   push:
-    branches: [ test ]
+    branches: [ main ]
   # schedule:
   #     # https://crontab.guru/
   #     # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
