@@ -39,6 +39,8 @@ jobs:
         if($oldpath -notlike "*;C:\minikube*"){`
           [Environment]::SetEnvironmentVariable("Path", $oldpath+";C:\minikube", [EnvironmentVariableTarget]::Machine)`
         }
+        # Profile "minikube" not found. Run "minikube profile list" to view all profiles.
+        minikube profile list
         minikube version --short
         minikube version --components
 
