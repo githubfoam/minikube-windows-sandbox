@@ -1,0 +1,70 @@
+
+name: "windows minikube CI workflow"
+
+on:
+  push:
+    branches: [ main ]
+  # schedule:
+  #     # https://crontab.guru/
+  #     # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+  #     - cron:  '0 0 * * FRI' ##execution of a task in the first minute of the month  
+
+
+
+jobs:
+
+
+  windows-latest-pwsh-minikube:
+    name: "windows-latest Microsoft Windows Server 2019 Datacenter pwsh"  
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1     
+    - name: "osfingerprinting"
+      run: systeminfo | more  
+    - name: "check curl version"
+      run: curl --version  
+    - name: "check minikube version"
+      run: minikube version --short               
+    # https://minikube.sigs.k8s.io/docs/start/
+    - name: "Download the latest release"
+      run: |
+        curl -Lo minikube.exe https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe
+        New-Item -Path "c:\" -Name "minikube" -ItemType "directory" -Force
+        Move-Item .\minikube.exe c:\minikube\minikube.exe -Force
+    - name: "Add the binary in to your PATH."
+      run: |
+        # Make sure to run PowerShell as Administrator
+        $oldpath=[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+        if($oldpath -notlike "*;C:\minikube*"){`
+          [Environment]::SetEnvironmentVariable("Path", $oldpath+";C:\minikube", [EnvironmentVariableTarget]::Machine)`
+        }
+
+
+  
+
+  windows-2016-pwsh-osquery:
+    name: "Microsoft Windows Server 2016 Datacenter pwsh"
+    runs-on: windows-2016
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1     
+    - name: "osfingerprinting"
+      run: systeminfo | more  
+    - name: "check curl version"
+      run: curl --version  
+    - name: "check minikube version"
+      run: minikube version --short               
+    # https://minikube.sigs.k8s.io/docs/start/
+    - name: "Download the latest release"
+      run: |
+        curl -Lo minikube.exe https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe
+        New-Item -Path "c:\" -Name "minikube" -ItemType "directory" -Force
+        Move-Item .\minikube.exe c:\minikube\minikube.exe -Force
+    - name: "Add the binary in to your PATH."
+      run: |
+        # Make sure to run PowerShell as Administrator
+        $oldpath=[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+        if($oldpath -notlike "*;C:\minikube*"){`
+          [Environment]::SetEnvironmentVariable("Path", $oldpath+";C:\minikube", [EnvironmentVariableTarget]::Machine)`
+        }        
