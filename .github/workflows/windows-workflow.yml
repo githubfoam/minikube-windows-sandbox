@@ -22,6 +22,8 @@ jobs:
       uses: actions/checkout@v1     
     - name: "osfingerprinting"
       run: systeminfo | more  
+    - name: "check curl version"
+      run: curl --version      
     - name: "install curl"
       run: choco install curl      
     # https://minikube.sigs.k8s.io/docs/start/
@@ -37,7 +39,8 @@ jobs:
         if($oldpath -notlike "*;C:\minikube*"){`
           [Environment]::SetEnvironmentVariable("Path", $oldpath+";C:\minikube", [EnvironmentVariableTarget]::Machine)`
         }
-
+        minikube version --short
+        minikube version --components
 
   # windows-latest-pwsh-osquery:
   #   name: "windows-latest Microsoft Windows Server 2019 Datacenter pwsh"  
@@ -67,6 +70,8 @@ jobs:
   #     run: net start                       
   #   - name: "query unusual services"
   #     run: sc query 
+    
+
 
   
 
