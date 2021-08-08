@@ -23,9 +23,9 @@ jobs:
     - name: "osfingerprinting"
       run: systeminfo | more  
     - name: "check curl version"
-      run: curl --version      
-    - name: "install curl"
-      run: choco install curl      
+      run: curl --version  
+    - name: "check minikube version"
+      run: minikube version --short               
     # https://minikube.sigs.k8s.io/docs/start/
     - name: "Download the latest release"
       run: |
@@ -43,6 +43,12 @@ jobs:
         minikube profile list
         minikube version --short
         minikube version --components
+    # - name: "start minikube"
+    #   run: |
+    #     # Profile "minikube" not found. Run "minikube profile list" to view all profiles.
+    #     minikube profile list
+    #     minikube version --short
+    #     minikube version --components        
 
   # windows-latest-pwsh-osquery:
   #   name: "windows-latest Microsoft Windows Server 2019 Datacenter pwsh"  
